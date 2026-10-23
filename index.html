@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ministro de la productividad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap">
+<style>
+:root{
+  --fondo:#F5F1EA; --fondo2:#EBE5DA; --tinta:#1D1F1E; --texto:#45484A; --gris:#666A6B; --linea:#CFC8BB;
+  --acento:#24524F; --acento2:#B5543A; --oscuro:#1D1F1E; --claro:#F5F1EA;
+  --sans:'Inter Tight',Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--fondo:#161817;--fondo2:#202322;--tinta:#ECE8E1;--texto:#C7C3BB;--gris:#9C9F9E;--linea:#363A39;--acento:#7FB5AE;--acento2:#E08A6F}}
+:root[data-theme="dark"]{--fondo:#161817;--fondo2:#202322;--tinta:#ECE8E1;--texto:#C7C3BB;--gris:#9C9F9E;--linea:#363A39;--acento:#7FB5AE;--acento2:#E08A6F}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--fondo);color:var(--tinta);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1280px;margin:0 auto;padding:0 32px}
+.eti{font-size:13px;font-weight:500;color:var(--gris)}
+.num{font-variant-numeric:tabular-nums}
+header{padding:40px 0 28px;border-bottom:1px solid var(--linea)}
+header .fila{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+h1{font-size:clamp(34px,4.6vw,60px);font-weight:500;letter-spacing:-.03em;line-height:1}
+header p{max-width:620px;color:var(--texto);font-size:17px;margin-top:14px}
+.presupuesto{text-align:right}
+.presupuesto b{display:block;font-size:56px;font-weight:500;letter-spacing:-.03em;line-height:1}
+.presupuesto b.mal{color:var(--acento2)}
+main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:48px;padding:32px 0 56px}
+.palanca{border-top:1px solid var(--tinta);padding:16px 0 18px}
+.palanca .cab{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.palanca h2{font-size:21px;font-weight:500;letter-spacing:-.01em}
+.palanca .pts{font-size:24px;font-weight:500}
+.palanca .que{color:var(--texto);font-size:14.5px;margin:2px 0 10px}
+.palanca .riesgo{font-size:13.5px;color:var(--acento2);margin-top:8px}
+.palanca .riesgo::before{content:"Ojo: ";font-weight:600}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--linea);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--acento);cursor:pointer;border:3px solid var(--fondo)}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--acento);cursor:pointer;border:3px solid var(--fondo)}
+.choque{display:flex;gap:12px;align-items:center;border-top:1px solid var(--tinta);padding:16px 0;font-size:15px}
+.choque input{width:20px;height:20px;accent-color:var(--acento2)}
+.botones{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+button{font:inherit;font-size:14.5px;padding:10px 16px;border:1px solid var(--tinta);background:transparent;color:var(--tinta);cursor:pointer}
+button.lleno{background:var(--tinta);color:var(--fondo)}
+button:hover{opacity:.85}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--tinta)}
+.kpi{padding:18px 16px 18px 0;border-bottom:1px solid var(--linea)}
+.kpi:nth-child(odd){border-right:1px solid var(--linea)}
+.kpi:nth-child(even){padding-left:16px}
+.kpi b{display:block;font-size:clamp(34px,3.6vw,52px);font-weight:500;letter-spacing:-.03em;line-height:1.05}
+.kpi small{color:var(--gris);font-size:13.5px}
+.kpi .d{font-size:14px;font-weight:600;color:var(--acento)}
+.kpi .d.neg{color:var(--acento2)}
+.grafica{margin-top:24px;background:var(--fondo2);padding:18px 18px 10px}
+.grafica .cab{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.leyenda{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--texto)}
+.leyenda i{display:inline-block;width:16px;height:3px;vertical-align:middle;margin-right:6px}
+svg text{font-family:var(--sans);font-size:11px;fill:var(--gris)}
+.lectura{margin-top:20px;border-left:3px solid var(--acento);padding:4px 0 4px 18px;font-size:16.5px}
+.lectura b{font-weight:600}
+.equipos{margin-top:28px}
+.equipos table{width:100%;border-collapse:collapse;font-size:14px}
+.equipos th,.equipos td{padding:8px 6px;border-bottom:1px solid var(--linea);text-align:right}
+.equipos th:first-child,.equipos td:first-child{text-align:left;padding-left:0}
+.equipos th{color:var(--gris);font-weight:500;font-size:12.5px}
+.tabla-wrap{overflow-x:auto}
+.preguntas{background:var(--oscuro);color:var(--claro);padding:48px 0}
+.preguntas h3{font-size:28px;font-weight:500;letter-spacing:-.02em;margin-bottom:18px}
+.preguntas ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;list-style:none;counter-reset:q}
+.preguntas li{counter-increment:q;border-top:1px solid #4A4D4C;padding-top:14px;font-size:17px}
+.preguntas li::before{content:"0" counter(q);display:block;font-size:13px;color:#9C9F9E;margin-bottom:6px}
+footer{padding:28px 0 40px;font-size:13px;color:var(--gris)}
+footer p+p{margin-top:6px}
+@media (max-width:900px){main{grid-template-columns:1fr}.preguntas ol{grid-template-columns:1fr}.presupuesto{text-align:left}}
+@media (max-width:520px){.wrap{padding:0 16px}.kpis{grid-template-columns:1fr}.kpi:nth-child(odd){border-right:none}.kpi:nth-child(even){padding-left:0}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap fila">
+    <div>
+      <p class="eti">Coyuntura Económica · Productividad y empresa · Actividad</p>
+      <h1>Ustedes son el ministro de la productividad</h1>
+      <p>Tienen 100 puntos de presupuesto para diez años. Repártanlos entre cinco palancas y miren cómo queda la productividad de Colombia en 2035. No hay respuesta perfecta: cada palanca tiene un costo.</p>
+    </div>
+    <div class="presupuesto"><span class="eti">Puntos por repartir</span><b class="num" id="resto">100</b></div>
+  </div>
+</header>
+
+<div class="wrap">
+<main>
+  <section aria-label="Palancas de política">
+    <div id="palancas"></div>
+    <label class="choque"><input type="checkbox" id="choque"> Incertidumbre política: las empresas aplazan la inversión (las palancas rinden 30 % menos)</label>
+    <div class="botones">
+      <button id="igual">Repartir igual</button>
+      <button id="cero">Empezar de cero</button>
+      <button class="lleno" id="guardar">Guardar como equipo</button>
+      <button id="borrar">Borrar equipos</button>
+    </div>
+  </section>
+
+  <section aria-label="Resultados">
+    <div class="kpis">
+      <div class="kpi"><small>Productividad por hora en 2035</small><b class="num" id="k-prod"></b><span class="d" id="k-prod-d"></span></div>
+      <div class="kpi"><small>Crecimiento anual de la productividad</small><b class="num" id="k-crec"></b><span class="d" id="k-crec-d"></span></div>
+      <div class="kpi"><small>Informalidad laboral en 2035</small><b class="num" id="k-inf"></b><span class="d" id="k-inf-d"></span></div>
+      <div class="kpi"><small>Colombianos para igualar 1 hora de la OCDE</small><b class="num" id="k-ocde"></b><span class="d" id="k-ocde-d"></span></div>
+    </div>
+    <div class="grafica">
+      <div class="cab"><span class="eti">Productividad por hora trabajada, US$ de 2024</span><div class="leyenda" id="leyenda"></div></div>
+      <svg id="svg" viewBox="0 0 640 260" role="img" aria-label="Trayectoria de la productividad por hora 2025-2035"></svg>
+    </div>
+    <p class="lectura" id="lectura"></p>
+    <div class="equipos">
+      <p class="eti" style="margin-bottom:6px">Equipos guardados</p>
+      <div class="tabla-wrap"><table>
+        <thead><tr><th>Equipo</th><th>Formal.</th><th>Escalar</th><th>I+D</th><th>Educ.</th><th>Infra.</th><th>US$/hora 2035</th><th>Informalidad</th></tr></thead>
+        <tbody id="tabla"><tr><td colspan="8" style="text-align:left;color:var(--gris)">Todavía no hay equipos. Repartan los puntos y opriman «Guardar como equipo».</td></tr></tbody>
+      </table></div>
+    </div>
+  </section>
+</main>
+</div>
+
+<section class="preguntas">
+  <div class="wrap">
+    <h3>Para discutir después de jugar</h3>
+    <ol>
+      <li>¿Por qué repartir los puntos da mejor resultado que ponerlos todos en una sola palanca?</li>
+      <li>La educación y la I+D tardan años en rendir. ¿Qué gobierno las financiaría si el resultado llega después de su periodo?</li>
+      <li>Si bajan los costos de contratar formalmente, ¿quién paga la salud y las pensiones que dejan de recaudarse?</li>
+    </ol>
+  </div>
+</section>
+
+<footer class="wrap">
+  <p>Modelo ilustrativo hecho por el grupo para la clase; no es un pronóstico. Punto de partida: US$ 18,5 por hora trabajada (Colombia) y US$ 71,5 (OCDE), Conference Board 2024, citado en el Informe Nacional de Competitividad 2025-2026; crecimiento de la productividad laboral de 0,40 % en 2025 (DANE, 2026); informalidad de 55,1 % en 2025 (DANE).</p>
+  <p>Supuestos: cada palanca tiene rendimientos decrecientes; la educación y la I+D empiezan a rendir después de varios años; la OCDE crece 0,8 % al año.</p>
+</footer>
+
+<script>
+const PALANCAS = [
+  { id: "formal", nombre: "Formalización", que: "Bajar los costos de contratar formalmente y simplificar el régimen para pequeñas empresas.", riesgo: "se recauda menos para salud y pensiones mientras la formalidad crece.", max: 0.7, inf: 12, retraso: 0, rampa: 2, color: "#24524F" },
+  { id: "escalar", nombre: "Escalar empresas", que: "Programas como Fábricas de Productividad, crédito para pymes y compras públicas a empresas que crecen.", riesgo: "el Estado puede terminar escogiendo ganadores o protegiendo empresas «zombi».", max: 0.9, inf: 4, retraso: 0, rampa: 3, color: "#B5543A" },
+  { id: "id", nombre: "Innovación e I+D", que: "Subir la inversión en investigación y adopción de tecnología, hoy cerca de 0,3 % del PIB.", riesgo: "rinde después de varios años y el crédito se lo lleva el siguiente gobierno.", max: 1.0, inf: 0, retraso: 2, rampa: 5, color: "#6E7F9A" },
+  { id: "educ", nombre: "Educación técnica", que: "Formación técnica y tecnológica pertinente, bilingüismo y habilidades digitales.", riesgo: "el efecto llega cuando los estudiantes de hoy entran a trabajar: 6 a 10 años.", max: 0.9, inf: 3, retraso: 4, rampa: 5, color: "#9A7B3F" },
+  { id: "infra", nombre: "Infraestructura y logística", que: "Vías, puertos y conectividad para bajar los costos de mover mercancía.", riesgo: "obras caras, con retrasos y riesgo de corrupción.", max: 0.6, inf: 0, retraso: 1, rampa: 4, color: "#7A7D7C" },
+];
+const BASE = { prod: 18.5, crec: 0.004, inf: 55.1, ocde: 71.5, crecOcde: 0.008, años: 10, k: 30 };
+const pts = { formal: 20, escalar: 20, id: 20, educ: 20, infra: 20 };
+let equipos = [];
+try { equipos = JSON.parse(localStorage.getItem("equipos_productividad") || "[]"); } catch (e) { equipos = []; }
+const $ = (id) => document.getElementById(id);
+const f1 = (v, d = 1) => v.toLocaleString("es-CO", { minimumFractionDigits: d, maximumFractionDigits: d });
+
+function simular(asig, choque) {
+  const factor = choque ? 0.7 : 1;
+  let prod = BASE.prod, inf = BASE.inf;
+  const serie = [prod];
+  let sumaCrec = 0;
+  for (let t = 1; t <= BASE.años; t++) {
+    let g = BASE.crec;
+    for (const p of PALANCAS) {
+      const sat = 1 - Math.exp(-asig[p.id] / BASE.k);
+      const r = t <= p.retraso ? 0 : Math.min(1, (t - p.retraso) / p.rampa);
+      g += (p.max / 100) * sat * r * factor;
+    }
+    prod *= 1 + g; serie.push(prod); sumaCrec += g;
+  }
+  for (const p of PALANCAS) inf -= p.inf * (1 - Math.exp(-asig[p.id] / BASE.k)) * factor;
+  const ocde2035 = BASE.ocde * Math.pow(1 + BASE.crecOcde, BASE.años);
+  return { prod, serie, crec: sumaCrec / BASE.años, inf, veces: ocde2035 / prod, ocde2035 };
+}
+
+function dibujarPalancas() {
+  $("palancas").innerHTML = PALANCAS.map((p) => `
+    <div class="palanca">
+      <div class="cab"><h2>${p.nombre}</h2><span class="pts num" id="v-${p.id}"></span></div>
+      <p class="que">${p.que}</p>
+      <input type="range" min="0" max="100" step="5" id="r-${p.id}" aria-label="Puntos para ${p.nombre}">
+      <p class="riesgo">${p.riesgo}</p>
+    </div>`).join("");
+  for (const p of PALANCAS) {
+    const r = $("r-" + p.id);
+    r.value = pts[p.id];
+    r.oninput = () => {
+      const otros = Object.entries(pts).filter(([k]) => k !== p.id).reduce((a, [, v]) => a + v, 0);
+      pts[p.id] = Math.min(+r.value, 100 - otros);
+      r.value = pts[p.id];
+      actualizar();
+    };
+  }
+}
+
+function grafica(res) {
+  const W = 640, H = 260, P = { l: 40, r: 12, t: 12, b: 26 };
+  const series = [{ nombre: "Sin cambios", serie: simular({ formal: 0, escalar: 0, id: 0, educ: 0, infra: 0 }, false).serie, color: "#9A9488", gruesa: 1.5, rayas: true }];
+  equipos.forEach((e, i) => series.push({ nombre: e.nombre, serie: simular(e.asig, e.choque).serie, color: ["#6E7F9A", "#9A7B3F", "#7A7D7C", "#B5543A"][i % 4], gruesa: 1.8 }));
+  series.push({ nombre: "Su reparto", serie: res.serie, color: getComputedStyle(document.documentElement).getPropertyValue("--acento").trim() || "#24524F", gruesa: 3.2 });
+  const todos = series.flatMap((s) => s.serie);
+  const min = Math.floor(Math.min(...todos) - 0.5), max = Math.ceil(Math.max(...todos) + 0.5);
+  const x = (t) => P.l + (t / 10) * (W - P.l - P.r);
+  const y = (v) => P.t + (1 - (v - min) / (max - min)) * (H - P.t - P.b);
+  let s = "";
+  const paso = max - min > 8 ? 2 : 1;
+  for (let v = min; v <= max; v += paso) s += `<line x1="${P.l}" x2="${W - P.r}" y1="${y(v)}" y2="${y(v)}" stroke="currentColor" opacity=".12"/><text x="${P.l - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+  [0, 2, 4, 6, 8, 10].forEach((t) => s += `<text x="${x(t)}" y="${H - 6}" text-anchor="${t === 0 ? "start" : t === 10 ? "end" : "middle"}">${2025 + t}</text>`);
+  for (const se of series) {
+    const pts2 = se.serie.map((v, t) => `${x(t).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+    s += `<polyline points="${pts2}" fill="none" stroke="${se.color}" stroke-width="${se.gruesa}" ${se.rayas ? 'stroke-dasharray="5 5"' : ""}/>`;
+  }
+  $("svg").innerHTML = s;
+  $("leyenda").innerHTML = series.map((se) => `<span><i style="background:${se.color}"></i>${se.nombre}</span>`).join("");
+}
+
+function actualizar() {
+  const usados = Object.values(pts).reduce((a, b) => a + b, 0);
+  $("resto").textContent = 100 - usados;
+  $("resto").className = "num" + (usados < 100 ? " mal" : "");
+  for (const p of PALANCAS) $("v-" + p.id).textContent = pts[p.id];
+  const choque = $("choque").checked;
+  const res = simular(pts, choque);
+  const base = simular({ formal: 0, escalar: 0, id: 0, educ: 0, infra: 0 }, false);
+  $("k-prod").textContent = "US$ " + f1(res.prod);
+  $("k-prod-d").textContent = `${f1((res.prod / base.prod - 1) * 100)} % más que sin cambios`;
+  $("k-crec").textContent = f1(res.crec * 100, 2) + " %";
+  $("k-crec-d").textContent = `hoy: 0,40 %`;
+  $("k-inf").textContent = f1(res.inf) + " %";
+  $("k-inf-d").textContent = `hoy: 55,1 %`;
+  $("k-ocde").textContent = f1(res.veces);
+  $("k-ocde-d").textContent = `hoy: 3,9`;
+
+  // Lectura automática
+  const orden = PALANCAS.map((p) => ({ p, v: pts[p.id] })).sort((a, b) => b.v - a.v);
+  const concentrado = orden[0].v >= 60;
+  const lento = (pts.id + pts.educ) >= 50;
+  const frases = [];
+  if (usados < 100) frases.push(`Les quedan <b>${100 - usados} puntos</b> sin usar: el presupuesto sin ejecutar no mejora nada.`);
+  if (concentrado) frases.push(`Pusieron ${orden[0].v} puntos en <b>${orden[0].p.nombre.toLowerCase()}</b>. Cada punto extra en la misma palanca rinde menos: repartir suele dar más.`);
+  if (lento) frases.push(`Más de la mitad va a <b>educación e I+D</b>: el resultado de 2035 es bueno, pero los primeros años casi no se nota. ¿Lo aguantaría la política?`);
+  if (pts.formal === 0) frases.push(`Sin formalización, la informalidad apenas baja: el tejido sigue siendo de microempresas que no crecen.`);
+  if (choque) frases.push(`La incertidumbre política le quita un 30 % al efecto de todo: la confianza también es política productiva.`);
+  if (!frases.length) frases.push(`Con este reparto, la productividad crece ${f1(res.crec * 100, 2)} % al año, pero en 2035 todavía hacen falta ${f1(res.veces)} colombianos para producir lo que produce una hora en la OCDE. Cerrar la brecha toma más de una década.`);
+  $("lectura").innerHTML = frases.join(" ");
+  grafica(res);
+  tabla();
+}
+
+function tabla() {
+  if (!equipos.length) return;
+  $("tabla").innerHTML = equipos.map((e) => {
+    const r = simular(e.asig, e.choque);
+    return `<tr><td>${e.nombre}${e.choque ? " *" : ""}</td>${PALANCAS.map((p) => `<td class="num">${e.asig[p.id]}</td>`).join("")}<td class="num"><b>${f1(r.prod)}</b></td><td class="num">${f1(r.inf)} %</td></tr>`;
+  }).join("");
+}
+
+$("igual").onclick = () => { for (const p of PALANCAS) { pts[p.id] = 20; $("r-" + p.id).value = 20; } actualizar(); };
+$("cero").onclick = () => { for (const p of PALANCAS) { pts[p.id] = 0; $("r-" + p.id).value = 0; } actualizar(); };
+$("choque").onchange = actualizar;
+$("guardar").onclick = () => {
+  if (equipos.length >= 4) equipos.shift();
+  equipos.push({ nombre: "", asig: { ...pts }, choque: $("choque").checked });
+  equipos.forEach((e, i) => e.nombre = "Equipo " + "ABCD"[i]);
+  try { localStorage.setItem("equipos_productividad", JSON.stringify(equipos)); } catch (e) {}
+  actualizar();
+};
+$("borrar").onclick = () => {
+  equipos = [];
+  try { localStorage.removeItem("equipos_productividad"); } catch (e) {}
+  $("tabla").innerHTML = `<tr><td colspan="8" style="text-align:left;color:var(--gris)">Todavía no hay equipos. Repartan los puntos y opriman «Guardar como equipo».</td></tr>`;
+  actualizar();
+};
+dibujarPalancas();
+actualizar();
+</script>
+</body>
+</html>
